@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMovieDetails } from '../../services/api';
-import s from './MovieDetailsPage.module.css'
+import s from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
+  const prevLocationRef = useRef(location.state?.from);
 
   useEffect(() => {
     const getData = async () => {
@@ -25,18 +26,17 @@ const MovieDetailsPage = () => {
   }
 
   const { title, overview, poster_path, vote_average } = movie;
-
   const posterUrl = poster_path
     ? `https://image.tmdb.org/t/p/w300${poster_path}`
     : 'path/to/default/image.jpg';
-    
+
   return (
     <div className={s.wraper}>
-      <Link to={location.state?.from || '/movies'} className={s.btn}>Go back</Link>
+      <Link to={prevLocationRef.current || '/movies'} className={s.btn}>Go back</Link>
       <div className={s.details}>
-      <img src={posterUrl} alt={title} />
+        <img src={posterUrl} alt={title} />
         <div className={s.description}>
-          <h2>{title} ({movie.id} )</h2>
+          <h2>{title} ({movie.id})</h2>
           <p className={s.text}>User Score: {vote_average * 10}%</p>
           <h3>Overview</h3>
           <p className={s.text}>{overview}</p>
@@ -46,13 +46,16 @@ const MovieDetailsPage = () => {
       <div className={s.additional}>
         <h3>Additional Information</h3>
         <nav>
-          <Link className={s.navLink} to="cast" state={{ from: location.state?.from }}>
+          <Link className={s.navLink} 
+          to="cast" state={{ from: location.state?.from }}>
             Cast
           </Link>
-          <Link className={s.navLink}  to="reviews" state={{ from: location.state?.from }}>
+          <Link className={s.navLink}
+          to="reviews" state={{ from: location.state?.from }}>
             Reviews
           </Link>
         </nav>
+        <hr className={({ isActive }) => isActive ? s.activeLink : s.separator} />
       </div>
       <Outlet />
       <hr />
