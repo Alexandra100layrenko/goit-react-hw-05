@@ -1,0 +1,29 @@
+.header{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    color: #242424;
+    padding: 10px 40px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    &:hover {
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease; /* Плавный переход */
+    }
+}
+
+.nav{
+    display: flex;
+    text-align: center;
+    gap: 10px;
+    a{
+        color: #242424;
+        padding-right: 10px;
+        text-decoration: none;
+    }
+    .active{
+        color: red;
+    }
+}

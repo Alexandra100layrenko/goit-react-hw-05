@@ -1,0 +1,10 @@
+.wraper{
+    display: flex;
+    margin: 40px;
+    
+}
+
+h2{
+    font-weight: 400;
+    font-size: 16px;
+}
